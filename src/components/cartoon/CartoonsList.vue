@@ -1,10 +1,10 @@
 <template>
   <div class="ctn-item">
-    <router-link :to="{name: 'details', params: {title: cartoon.title} }">
+    <router-link :to="{name: 'details', params: {id: cartoon.id, title: cartoon.title}}">
       <div class="ctn-poster">
         <img
           :src="cartoon.image"
-          onerror="src='src/assets/cartoon.png'; title='image not found'"
+          onerror="src='/src/assets/cartoon.png'; title='image not found'"
           alt="Cartoon Poster"
           :title="cartoon.title"
         />
@@ -26,13 +26,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import CartoonDetails from "./CartoonDetails.vue";
+<script setup>
+defineProps({
+  cartoon: Object
+})
 
-export default {
-  components: { CartoonDetails },
-  props: ["cartoon"],
-};
 </script>
 
 <style>

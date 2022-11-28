@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="d-flex">
-      <img src="src\assets\cartoon.png" alt="pinia logo" />
+      <img src="/src\assets\cartoon.png" alt="pinia logo" />
       <h1>KIDKID-TV</h1>
     </div>
 

@@ -17,7 +17,7 @@ const router = createRouter({
       component: AboutView
     },
     {
-      path: '/cartoons/:title',
+      path: '/cartoons/:id/:title',
       name: 'details',
       component: CartoonDetails,
       props: true

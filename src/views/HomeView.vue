@@ -14,29 +14,16 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup>
 import { storeToRefs } from "pinia";
 import CartoonsList from "@/components/cartoon/CartoonsList.vue";
 import { useCartoonStore } from "../stores/CartoonStore";
-import { provide } from "vue";
+import { ref, provide, onMounted } from "vue";
 
-export default {
-  components: { CartoonsList },
+const cartoonStore = useCartoonStore();
 
-  setup() {
-    const cartoonStore = useCartoonStore();
+const { cartoons } = storeToRefs(cartoonStore);
 
-    const { cartoons } = storeToRefs(cartoonStore);
+cartoonStore.fetchCartoons();
 
-    cartoonStore.fetchCartoons();
-
-    // onMounted(() => {
-    //   cartoonStore.fetchCartoons()
-    // });
-
-    provide("cartoon", 'Ben10');
-
-    return { cartoons };
-  },
-};
 </script>
