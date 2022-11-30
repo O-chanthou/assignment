@@ -7,8 +7,8 @@ export const useCartoonStore = defineStore("useCartoonStore", {
   }),
   getters: {},
   actions: {
+    
     async fetchCartoons(id?: number | string) {
-      console.log('fetch data ======>>>> ' + id);
       
      if (id == null || id == undefined) {
       /// fetch cartoon lists

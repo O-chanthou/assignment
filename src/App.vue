@@ -7,8 +7,9 @@
 
     <nav>
       <router-link :to="{name: 'home'}">Home</router-link> |
-      <router-link :to="{ name: 'about' }">About</router-link>
-
+      <router-link :to="{ name: 'add' }">Add Cartoon</router-link> |
+      <router-link :to="{ name: 'about' }">About</router-link> 
+      <!-- <router-link :to="{ name: 'about' }">{{$t('lang')}}</router-link> -->
     </nav>
   </header>
   

@@ -1,6 +1,11 @@
 <template>
   <div class="ctn-detail-container">
-    <img class="ctn-image" :src="cartoonDetail.image" alt="Poster Image" />
+    <img
+      class="ctn-image"
+      :src="cartoonDetail.image"
+      alt="Poster Image"
+      onerror="src='/src/assets/cartoon.png'; title='image not found'"
+    />
 
     <div class="ctn-detail">
       <div class="btn-watch-fav">
@@ -19,7 +24,11 @@
       </div>
 
       <div class="ctn-rating">
-        <a class="trailer">
+        <a
+          class="trailer"
+          :href="'https://www.youtube.com/results?search_query='+cartoonDetail.title"
+          target="_blank"
+        >
           <i class="material-icons"> videocam </i> Trailer
         </a>
         <a class="quality">HD</a>
@@ -33,25 +42,27 @@
           nisi eaque voluptatibus mollitia illum magni iusto!
         </p>
       </div>
-      <!--
-      <div class="info">
-        <div class="info-left">
-            <div class="release"></div>
-            <div class="genre"></div>
-            <div class="cast"></div>
-        </div>
-        <div class="info-right"></div>
-        <div class="spacer"></div>
-      </div> -->
       <div class="parent">
         <div class="info-left">
-            <div class="episode"><b>Episode:</b> {{cartoonDetail.episodes}}</div>
-            <div class="release"><b>Release:</b> {{cartoonDetail.year}}</div>
-            <div class="creator"><b>Genre:</b> <p v-for="genre in cartoonDetail.genre"> {{genre}}</p> </div>
+          <div class="episode">
+            <b>Episode:</b> {{ cartoonDetail.episodes }}
+          </div>
+          <div class="release"><b>Release:</b> {{ cartoonDetail.year }}</div>
+          <div class="genre">
+            <b>Genre:</b>
+            <span v-for="genre in cartoonDetail.genre"> {{ genre }}, </span>
+          </div>
         </div>
         <div class="info-right">
-            <div class="duration"><b>Duration:</b> {{cartoonDetail.runtime_in_minutes}} min</div>
-            <div class="creator"><b>Creator:</b> <p v-for="creator in cartoonDetail.creator"> {{creator}}</p> </div>
+          <div class="duration">
+            <b>Duration:</b> {{ cartoonDetail.runtime_in_minutes }} min
+          </div>
+          <div class="creator">
+            <b>Creator:</b>
+            <span v-for="creator in cartoonDetail.creator"
+              >{{ creator }},
+            </span>
+          </div>
         </div>
         <div class="spacer"></div>
       </div>
@@ -68,28 +79,29 @@ const props = defineProps({
   id: String,
 });
 
-console.log("props.id: " + props.id);
-
 const cartoonStore = useCartoonStore();
 
 cartoonStore.fetchCartoons(props.id);
 
 const { cartoonDetail } = storeToRefs(cartoonStore);
 
-console.log(cartoonDetail);
 </script>
 
 <style scoped>
 .parent {
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-grid-template-rows: 1fr;
-grid-column-gap: 0px;
-grid-row-gap: 0px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
 
-.div1 { grid-area: 1 / 1 / 2 / 2; }
-.div2 { grid-area: 1 / 2 / 2 / 3; }
+.div1 {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.div2 {
+  grid-area: 1 / 2 / 2 / 3;
+}
 
 .info-left {
   grid-area: 1 / 1 / 2 / 2;
@@ -102,15 +114,15 @@ grid-row-gap: 0px;
 }
 .ctn-detail-container {
   margin: 20px;
-  min-height: 480px;
+  height: 450px;
   background: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   display: flex;
 }
 .ctn-detail-container .ctn-image {
-  background: rgb(107, 99, 99);
-  width: 25%;
+  /* background: rgb(107, 99, 99); */
+  /* width: 25%; */
   margin-left: 25px;
   margin-top: 25px;
   margin-bottom: 25px;
@@ -134,7 +146,7 @@ a {
   display: flex;
   align-items: center;
   border-radius: 10px;
-  padding: 3px;
+  padding: 8px;
 }
 a.watch:hover {
   opacity: 0.8;
@@ -157,6 +169,7 @@ a.fav {
 }
 .material-icons {
   padding-right: 5px;
+  text-decoration: none;
 }
 .ctn-detail .ctn-rating {
   widows: 100%;
@@ -175,6 +188,8 @@ a.fav {
   border-radius: 4px;
   justify-content: center;
   margin: 0 10px 0 0;
+  padding: 2px;
+  text-decoration: none;
 }
 .quality {
   color: #111111;
@@ -185,6 +200,7 @@ a.fav {
   border-radius: 4px;
   justify-content: center;
   margin: 0 10px 0 0;
+  padding: 2px;
 }
 .rating {
   color: #ffa600;
@@ -193,5 +209,9 @@ a.fav {
 .desription p {
   font-size: 1em;
   color: #111111;
+}
+
+.genre p {
+  margin: 0;
 }
 </style>

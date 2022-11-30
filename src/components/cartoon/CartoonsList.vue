@@ -38,11 +38,8 @@ defineProps({
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  position: relative;
-  /* margin-left: 10px; */
-  margin-top: 10px;
-  margin-right: 30px;
-  margin-bottom: 10px;
+  justify-content: center;
+  margin-top: 20px;
 }
 .ctn-item {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

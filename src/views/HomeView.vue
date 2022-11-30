@@ -1,12 +1,5 @@
 <template>
   <div class="home">
-    <!-- button filter -->
-    <!-- <div class="filter">
-        <button >All Employees</button>
-        <button >Marked Employees</button>
-        <button >Add Employee</button>
-    </div> -->
-
     <!-- Cartoons list -->
     <div class="grid-container">
       <CartoonsList v-for="cartoon in cartoons" :cartoon="cartoon" />
