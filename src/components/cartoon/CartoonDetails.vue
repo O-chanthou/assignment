@@ -60,7 +60,7 @@
           <div class="creator">
             <b>Creator:</b>
             <span v-for="creator in cartoonDetail.creator"
-              >{{ creator }},
+              >  {{ creator }}
             </span>
           </div>
         </div>
@@ -130,7 +130,7 @@ const { cartoonDetail } = storeToRefs(cartoonStore);
 }
 .ctn-detail-container .ctn-detail {
   /* background: grey; */
-  width: 70%;
+  width: 100%;
   margin: 25px;
   padding: 0;
 }

@@ -70,9 +70,9 @@
 </template>
 
 <script setup>
+import { useCartoonStore } from "@/stores/CartoonStore";
 import PreviewImage from "./PreviewImage.vue";
 import { allGenreList } from "/data/all-genre-type";
-// import { CartoonModel } from "/data/cartoon-model";
 import { ref } from "vue";
 
 const title = ref('')
@@ -84,6 +84,9 @@ const genreType = []
 const runtime = ref(null)
 const episode = ref(null)
 const image = ref('')
+
+
+const cartoonStore = useCartoonStore()
 
 //// add creator to creatorList 
 const addCreator = (e) => {
@@ -126,14 +129,13 @@ const setIsSelect = (value) => {
   });
 };
 
-//// getDataImage
-// const imageData = (value) => {
-  // image.value = value
-  // console.log(image.value);
+// const uploadImageToFireBase = () => { 
+//   getInputFormData
 // }
 
 //// push data from form in to cartoon object
-const getInputFormData = () => {
+const getInputFormData = (image) => {
+
   const cartoonModel =  {
   title: title.value,
   year: year.value,
@@ -145,7 +147,9 @@ const getInputFormData = () => {
   image: '',
   id: Math.floor(Math.random() * 10000000),
 }
-console.log(cartoonModel);
+
+cartoonStore.createCartoon(cartoonModel)
+
 };
 </script>
 

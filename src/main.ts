@@ -1,7 +1,8 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import {createI18n} from 'vue-i18n'
-
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 import App from './App.vue'
 import router from './router'
 
@@ -24,6 +25,20 @@ const i18n = createI18n({
         }
     }
 })
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyC6ujazCKH5n8PXJhAlad2fGB5EFiaamDQ",
+  authDomain: "kidkid-tv.firebaseapp.com",
+  projectId: "kidkid-tv",
+  storageBucket: "kidkid-tv.appspot.com",
+  messagingSenderId: "201639909697",
+  appId: "1:201639909697:web:10658d12027b393373a9c0",
+  measurementId: "G-5GNKQSQYPY"
+};
+
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
 
 const app = createApp(App)
 
