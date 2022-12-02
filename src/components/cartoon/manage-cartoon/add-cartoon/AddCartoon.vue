@@ -70,9 +70,9 @@
 </template>
 
 <script setup>
-import { useCartoonStore } from "@/stores/CartoonStore";
+import { useCartoonStore } from "@/shared/stores/CartoonStore";
 import PreviewImage from "./PreviewImage.vue";
-import { allGenreList } from "/data/all-genre-type";
+import { allGenreList } from "@/shared/utils/all-genre-type";
 import { ref } from "vue";
 
 const title = ref('')

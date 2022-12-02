@@ -10,7 +10,7 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import CartoonsList from "@/components/cartoon/CartoonsList.vue";
-import { useCartoonStore } from "../stores/CartoonStore";
+import { useCartoonStore } from "@/shared/stores/CartoonStore";
 import { ref, provide, onMounted } from "vue";
 
 const cartoonStore = useCartoonStore();

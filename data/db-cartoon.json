@@ -1,37 +1,6 @@
 {
   "cartoons": [
     {
-      "title": "The Simpsons",
-      "year": 1999,
-      "creator": [
-        "Matt Groening"
-      ],
-      "rating": "TV-PG",
-      "genre": [
-        "Comedy"
-      ],
-      "runtime_in_minutes": 22,
-      "episodes": 684,
-      "image": "https://m.media-amazon.com/images/M/MV5BYjFkMTlkYWUtZWFhNy00M2FmLThiOTYtYTRiYjVlZWYxNmJkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SY1000_CR0,0,666,1000_AL_.jpg",
-      "id": 2
-    },
-    {
-      "title": "Star vs the Forces of Evil",
-      "year": 1999,
-      "creator": [
-        "Stephen Hillenburg"
-      ],
-      "rating": "TV-Y7",
-      "genre": [
-        "Action",
-        "Adventure"
-      ],
-      "runtime_in_minutes": 22,
-      "episodes": 77,
-      "image": "https://m.media-amazon.com/images/M/MV5BYjFkMTlkYWUtZWFhNy00M2FmLThiOTYtYTRiYjVlZWYxNmJkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SY1000_CR0,0,666,1000_AL_.jpg",
-      "id": 3
-    },
-    {
       "title": "Gravity Falls",
       "year": 2012,
       "creator": [
@@ -358,40 +327,6 @@
       "episodes": 50,
       "image": "https://m.media-amazon.com/images/M/MV5BZjFkZDkwYjktMmZkNi00ZTVkLWI5ZmItZWI2MmI1NjQ1Y2U0XkEyXkFqcGdeQXVyOTg4MDk3MTQ@._V1_SY1000_CR0,0,666,1000_AL_.jpg",
       "id": 23
-    },
-    {
-      "title": "kongfu boy",
-      "year": 2023,
-      "creator": [
-        "thou"
-      ],
-      "rating": "2",
-      "genre": [
-        "Action",
-        "Adventure",
-        "Biography"
-      ],
-      "runtime_in_minutes": 122,
-      "episodes": 1,
-      "image": "https://firebasestorage.googleapis.com/v0/b/property-connect-304903.appspot.com/o/userImages%2F36-32%2F1657443616696photo-1503023345310-bd7c1de61c7d.jpeg?alt=media&token=7fb3aebf-5954-42b3-82d7-eb6e369e3ca1",
-      "id": 987767
-    },
-    {
-      "title": "hello world",
-      "year": 2019,
-      "creator": [
-        "Tomohiko Itō"
-      ],
-      "rating": "8",
-      "genre": [
-        "Adventure",
-        "Romance",
-        "Documentary"
-      ],
-      "runtime_in_minutes": 98,
-      "episodes": 1,
-      "image": "",
-      "id": 1742301
     }
   ]
 }

@@ -1,11 +1,11 @@
 <template>
   <div class="manage-ctn-container">
-    <div class="add-cartoon">
-      <router-link :to="{ name: 'add' }">Add Cartoon</router-link>
-    </div>
-    <div class="delete-cartoon">
-      <router-link :to="{ name: 'update-delete' }">Update / Delete Cartoon</router-link>
-    </div>
+    <router-link :to="{ name: 'add' }">
+      <div class="add-cartoon">Add Cartoon</div></router-link
+    >
+    <router-link :to="{ name: 'update-delete' }">
+      <div class="delete-cartoon">Update / Delete Cartoon</div></router-link
+    >
   </div>
 </template>
 
@@ -27,6 +27,7 @@
 .add-cartoon {
   grid-area: 1 / 1 / 2 / 2;
   background: #44a158;
+  padding: 30px;
   color: #fff;
   height: 100%;
   display: flex;
@@ -39,7 +40,8 @@
 }
 .delete-cartoon {
   grid-area: 1 / 2 / 2 / 3;
-  background: #cd5c5c;
+  background: #CE1F1FFD;
+  padding: 30px;
   color: #fff;
   height: 100%;
   display: flex;

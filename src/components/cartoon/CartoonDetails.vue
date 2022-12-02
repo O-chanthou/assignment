@@ -49,16 +49,16 @@
           </div>
           <div class="release"><b>Release:</b> {{ cartoonDetail.year }}</div>
           <div class="genre">
-            <b>Genre:</b>
+            <b>Genre: </b>
             <span v-for="genre in cartoonDetail.genre"> {{ genre }}, </span>
           </div>
         </div>
         <div class="info-right">
           <div class="duration">
-            <b>Duration:</b> {{ cartoonDetail.runtime_in_minutes }} min
+            <b>Duration: </b> {{ cartoonDetail.runtime_in_minutes }} min
           </div>
           <div class="creator">
-            <b>Creator:</b>
+            <b>Creator : </b>
             <span v-for="creator in cartoonDetail.creator"
               >  {{ creator }}
             </span>
@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { useCartoonStore } from "@/stores/CartoonStore";
+import { useCartoonStore } from "@/shared/stores/CartoonStore";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
