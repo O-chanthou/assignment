@@ -16,4 +16,7 @@ export const allGenreList = ref([
   { "id": 13, name: "Science Fiction", isSelect: false },
   { "id": 14, name: "Thriller", isSelect: false },
   { "id": 15, name: "War", isSelect: false },
+  { "id": 16, name: "Drama", isSelect: false },
+  { "id": 17, name: "Family", isSelect: false },
+  { "id": 18, name: "Short", isSelect: false },
 ]);

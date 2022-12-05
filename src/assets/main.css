@@ -85,3 +85,29 @@ nav a.router-link-exact-active {
   cursor: pointer;
   font-size: 1em;
 } */
+
+
+/* enter transitions */
+.toast-enter-from {
+    opacity: 0;
+    transform: translateX(220px);
+  }
+  .toast-enter-to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .toast-enter-active {
+    transition: all 0.3s ease;
+  }
+  /* leave transitions */
+  .toast-leave-from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .toast-leave-to {
+    opacity: 0;
+    transform: translateX(120px);
+  }
+  .toast-leave-active {
+    transition: all 0.3s ease;
+  }

@@ -5,7 +5,7 @@
     </div>
     <div
       class="imagePreviewWrapper"
-      :style="{ 'background-image': previewImage == null ? `url(/src/assets/cartoon.png)` : `url(${previewImage})`}"
+      :style="{ 'background-image': previewImage == null ? `url(${image})` : `url(${previewImage})`}"
       @click="selectImage"
     ></div>
   </div>
@@ -13,11 +13,13 @@
 
 <script>
 export default {
+  props: ['image'],
   data() {
     return {
       previewImage: null,
     };
   },
+
   methods: {
     selectImage() {
       this.$refs.fileInput.click();

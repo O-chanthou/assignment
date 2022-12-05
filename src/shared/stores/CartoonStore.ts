@@ -7,6 +7,8 @@ export const useCartoonStore = defineStore("useCartoonStore", {
   state: () => ({
     cartoons: cartoons,
     cartoonDetail: {},
+    loaded: '',
+    updateMsg: '',
     isDelete: false
   }),
 
@@ -15,19 +17,22 @@ export const useCartoonStore = defineStore("useCartoonStore", {
   actions: {
     async fetchCartoons(id?: number | string) {
       if (id == null || id == undefined) {
+    
         /// fetch cartoon lists
         const res = await fetch("http://localhost:3000/cartoons");
         // const res = await fetch("https://api.sampleapis.com/cartoons/cartoons2D/");
         const data = await res.json();
-
         this.cartoons = data;
+        return this.loaded = 'loaded'
       } else {
+        
         /// fetch cartoon details
         const res = await fetch("http://localhost:3000/cartoons/" + id);
         // const res = await fetch("https://api.sampleapis.com/cartoons/cartoons2D/");
         const data = await res.json();
 
         this.cartoonDetail = data;
+        return this.loaded = 'loaded'
       }
     },
 
@@ -75,5 +80,37 @@ export const useCartoonStore = defineStore("useCartoonStore", {
       })
       return this.isDelete
     },
+
+    async updateCartoon(id: number | string, cartoon: any) {
+      console.log('start update data ......');
+    
+      const requestOptions = {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: cartoon.title,
+          year: cartoon.year,
+          creator: cartoon.creator,
+          rating: cartoon.rating,
+          genre: cartoon.genre,
+          runtime_in_minutes: cartoon.runtime,
+          episodes: cartoon.episode,
+          image: cartoon.image,
+        }),
+      };
+    
+      const response = await fetch(
+        "http://localhost:3000/cartoons/"+id,
+        requestOptions
+      );
+      if (response.ok) {
+        const data = await response.json();
+        this.cartoonDetail = data
+       return this.updateMsg = 'success'
+      } else {
+       return this.updateMsg = 'fail'
+      }
+      
+    } 
   },
 });

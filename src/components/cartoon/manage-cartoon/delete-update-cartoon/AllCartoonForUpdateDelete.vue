@@ -33,7 +33,9 @@
         </div>
 
         <div class="icons">
-          <i class="material-icons md-24 green">edit</i>
+          <router-link :to="{ name: 'update', params: { id: cartoon.id, title: cartoon.title }}"
+            ><i class="material-icons md-24 green">edit</i></router-link
+          >
           <i
             class="material-icons md-24 red"
             @click="toggleModal(cartoon.title, cartoon.id)"
@@ -42,7 +44,12 @@
         </div>
       </div>
     </div>
-    <ModalDelete @close="toggleModal" :modalActive="modalActive" :ctnId="ctnId" @emitDelete="getEmitDelete">
+    <ModalDelete
+      @close="toggleModal"
+      :modalActive="modalActive"
+      :ctnId="ctnId"
+      @emitDelete="getEmitDelete"
+    >
       <div class="modal-content">
         <h3>Remove Cartoon</h3>
         <p>
@@ -51,7 +58,7 @@
       </div>
     </ModalDelete>
     <transition name="toast">
-      <ToastNotification v-if="showToast" :msgDelete="msgDelete"/>
+      <ToastNotification v-if="showToast" :msgDelete="msgDelete" />
     </transition>
   </div>
 </template>
@@ -61,13 +68,13 @@ import { ref } from "vue";
 import { useCartoonStore } from "@/shared/stores/CartoonStore";
 import { storeToRefs } from "pinia";
 import ModalDelete from "@/components/modals/ModalDelete.vue";
-import ToastNotification from '@/components/modals/ToastNotification.vue'
+import ToastNotification from "@/components/modals/ToastNotification.vue";
 
 const modalActive = ref(false);
 const ctnTitle = ref("");
 const ctnId = ref();
-const showToast = ref(false)
-const msgDelete = ref(Boolean)
+const showToast = ref(false);
+const msgDelete = ref(Boolean);
 
 const cartoonStore = useCartoonStore();
 cartoonStore.fetchCartoons();
@@ -80,37 +87,14 @@ const toggleModal = (title, id) => {
 };
 
 const getEmitDelete = (value) => {
-  msgDelete.value = value
+  msgDelete.value = value;
   showToast.value = true;
-      setTimeout(() => showToast.value = false, 3000)
-}
+  setTimeout(() => (showToast.value = false), 3000);
+};
 </script>
 
 <style scoped>
-/* enter transitions */
-.toast-enter-from {
-    opacity: 0;
-    transform: translateX(220px);
-  }
-  .toast-enter-to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  .toast-enter-active {
-    transition: all 0.3s ease;
-  }
-  /* leave transitions */
-  .toast-leave-from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .toast-leave-to {
-    opacity: 0;
-    transform: translateX(120px);
-  }
-  .toast-leave-active {
-    transition: all 0.3s ease;
-  }
+
 .material-icons.md-24 {
   font-size: 26px;
 }
