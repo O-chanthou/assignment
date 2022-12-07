@@ -9,4 +9,5 @@ export interface Cartoon {
     runtime_in_minutes: number,
     episodes: number,
     image: string,  
+    isFav: boolean
 }

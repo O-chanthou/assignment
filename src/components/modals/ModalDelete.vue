@@ -14,14 +14,14 @@
               style="background: #5cb85c"
               type="button"
             >
-              No
+            {{$t('update-delete.no')}}
             </button>
             <button
               @click="btnDeleteCartoon(props.ctnId)"
               style="background: crimson"
               type="button"
             >
-              Yes
+            {{$t('update-delete.yes')}}
             </button>
           </div>
         </div>

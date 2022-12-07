@@ -1,0 +1,78 @@
+{
+    "nav": {
+        "home": "Home",
+        "manage-cartoon": "Manage Cartoon",
+        "about": "About",
+        "en": "English",
+        "km": "ខ្មែរ",
+        "language": "Language"
+    },
+    "home":{
+        "filter": "Filter by year",
+        "favorite": "Favorite"
+    },
+    "detail": {
+        "watch-now": "Watch now",
+        "add-to-fav": "Add to favorite",
+        "trailer": "Trailer",
+        "rating": "Rating",
+        "ep": "Episode",
+        "release": "Release",
+        "genre": "Genre",
+        "duration": "Duration",
+        "min": "min",
+        "creator": "Creator"
+    },
+    "genre": {
+        "Action": "Action",
+        "Adventure": "Adventure",
+        "Biography": "Biography",
+        "Comedy": "Comedy",
+        "Crime": "Crime",
+        "Documentary": "Documentary",
+        "Fantasy": "Fantasy",
+        "History": "History",
+        "Horror": "Horror",
+        "Music": "Music",
+        "Romance": "Romance",
+        "Sci-Fi & Fantasy": "Sci-Fi & Fantasy",
+        "Science Fiction": "Science Fiction",
+        "Thriller": "Thriller",
+        "War": "War",
+        "Drama": "Drama",
+        "Family": "Family",
+        "Short": "Short"
+    },
+    "manage": {
+        "add-cartoon": "Add Cartoon",
+        "update-delete": "Update/Delete Cartoon"
+    }, 
+    "create": {
+        "title": "Title",
+        "year": "Year",
+        "creator": "Creator",
+        "add-click": "Add click",
+        "and-remove-click-value": "And Remove click on value",
+        "rating": "Rating",
+        "genre": "Genre",
+        "runtime": "Runtime",
+        "runtime-min": "Runtime in minute",
+        "ep": "Episode",
+        "no-file-chosen": "No file chosen",
+        "add-cartoon": "Add Cartoon"
+    },
+    "update-delete": {
+        "all-cartoon": "All Cartoon: ",
+        "ep": "ep",
+        "mins": "mins",
+        "remove-cartoon": "Remove Cartoon",
+        "do-u-want-to-remove": "Do you want to remove ",
+        "no": "No",
+        "yes": "Yes",
+        "update-cartoon": "Update Cartoon"
+    },
+    "tost": {
+        "success": "Success",
+        "when-wrong": "Something when wrong..."
+    }
+}

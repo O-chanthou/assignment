@@ -1,27 +1,29 @@
 <template>
   <div class="toast-wrapper">
     <div class="toast" :style="{ background: msgColor }">
-      {{ msgDelete ? "Successfully" : "Something when wrong..." }}
+      {{ msg ? "Success" : "Something when wrong..." }}
     </div>
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
+
+/////// msg = message for check true or false , true set toast to success, false set toast to fail
 const props = defineProps({
-  msgDelete: Boolean,
+  msg: Boolean,
 });
 
 const msgColor = ref("");
 
-const checkMsgDelete = () => {
-  if (props.msgDelete) {
+const checkMsg = () => {
+  if (props.msg) {
     msgColor.value = "#499f45";
   } else {
     msgColor.value = "#ff3333";
   }
 };
 
-checkMsgDelete();
+checkMsg();
 </script>
 
 <style>

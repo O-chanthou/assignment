@@ -1,15 +1,13 @@
 <template>
   <div class="manage-ctn-container">
     <router-link :to="{ name: 'add' }">
-      <div class="add-cartoon">Add Cartoon</div></router-link
+      <div class="add-cartoon">{{$t('manage.add-cartoon')}}</div></router-link
     >
     <router-link :to="{ name: 'update-delete' }">
-      <div class="delete-cartoon">Update / Delete Cartoon</div></router-link
+      <div class="delete-cartoon">{{$t('manage.update-delete')}}</div></router-link
     >
   </div>
 </template>
-
-<script setup></script>
 
 <style scoped>
 .manage-ctn-container {

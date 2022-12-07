@@ -1,7 +1,7 @@
 <template>
   <div class="cartoons-container">
     <div class="txt-cartoon">
-      <h2>All Cartoon : {{ cartoons.length }}</h2>
+      <h2>{{$t('update-delete.all-cartoon')}} {{ cartoons.length }}</h2>
     </div>
 
     <div class="cartoonList">
@@ -23,9 +23,9 @@
           <div class="info">
             <span style="font-size: 1.3em">{{ cartoon.title }}</span>
             <div>
-              <span>{{ cartoon.episodes }} ep</span>
+              <span>{{ cartoon.episodes }} {{$t('update-delete.ep')}}</span>
               <span class="dot"></span>
-              <span>{{ cartoon.runtime_in_minutes }}mins</span>
+              <span>{{ cartoon.runtime_in_minutes }} {{$t('update-delete.mins')}}</span>
               <span class="dot"></span>
               <span>{{ cartoon.year }}</span>
             </div>
@@ -51,14 +51,14 @@
       @emitDelete="getEmitDelete"
     >
       <div class="modal-content">
-        <h3>Remove Cartoon</h3>
+        <h3>{{$t('update-delete.remove-cartoon')}}</h3>
         <p>
-          Do you want to remove <b>{{ ctnTitle }}</b> ?
+          {{$t('update-delete.do-u-want-to-remove')}} <b>{{ ctnTitle }}</b> ?
         </p>
       </div>
     </ModalDelete>
     <transition name="toast">
-      <ToastNotification v-if="showToast" :msgDelete="msgDelete" />
+      <ToastNotification v-if="showToast" :msg="msgDelete" />
     </transition>
   </div>
 </template>

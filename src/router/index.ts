@@ -5,7 +5,7 @@ import CartoonDetails from '@/components/cartoon/CartoonDetails.vue'
 import CreateCartoonView from '@/views/AddCartoonView.vue'
 import ManageCartoonView from '@/views/ManageCartoonView.vue'
 import AllCartoonForUpdateDelete from '@/components/cartoon/manage-cartoon/delete-update-cartoon/AllCartoonForUpdateDelete.vue'
-import UpdateCartoon from '@/components/cartoon/manage-cartoon/add-cartoon/UpdateCartoon.vue'
+import UpdateCartoon from '@/components/cartoon/manage-cartoon/delete-update-cartoon/UpdateCartoon.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

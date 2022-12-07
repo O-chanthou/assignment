@@ -3,27 +3,27 @@
   <form @submit.prevent="getInputFormData" v-else>
     <div class="add-ctn-container">
       <div class="form-input">
-        <label>Title:</label>
-        <input type="text" placeholder="Title" required v-model="form.title" />
+        <label>{{$t('create.title')}}:</label>
+        <input type="text" :placeholder="$t('create.title')" required v-model="form.title" />
 
-        <label>Year:</label>
+        <label>{{$t('create.year')}}:</label>
         <input
           type="number"
           min="0"
-          placeholder="Year"
+          :placeholder="$t('create.year')"
           required
           v-model="form.year"
         />
 
-        <label>Creator:</label>
+        <label>{{$t('create.creator')}}:</label>
         <input
           type="text"
-          placeholder="Creator"
+          :placeholder="$t('create.creator')"
           v-model="creator"
           @keyup.alt="addCreator"
         />
         <div class="tip">
-          <p>Add click <b>Alt</b> + <b>,</b> and Romove click on value</p>
+          <p>{{$t('create.add-click')}} <b>Alt</b> + <b>,</b> {{$t('create.and-remove-click-value')}}</p>
         </div>
         <div
           v-for="creator in form.creatorList"
@@ -35,10 +35,10 @@
         </div>
         <br />
 
-        <label>Rating:</label>
-        <input type="text" placeholder="Rating" v-model="form.rating" />
+        <label>{{$t('create.rating')}}:</label>
+        <input type="text" :placeholder="$t('create.rating')" v-model="form.rating" />
 
-        <label>Genre:</label>
+        <label>{{$t('create.genre')}}:</label>
         <div
           class="genre"
           v-for="genre in allGenreList"
@@ -46,22 +46,22 @@
           :class="{ active: genre.isSelect }"
           @click="addGenre(genre.name)"
         >
-          {{ genre.name }}
+          {{ $t(`genre.${genre.name}`) }}
         </div>
         <br />
 
-        <label>Runtime:</label>
+        <label>{{$t('create.runtime')}}:</label>
         <input
           type="number"
-          placeholder="Runtime in minute"
+          :placeholder="$t('create.runtime-min')"
           required
           v-model="form.runtime"
         />
 
-        <label>Episode:</label>
+        <label>{{$t('create.ep')}}:</label>
         <input
           type="number"
-          placeholder="Episode"
+          :placeholder="$t('create.ep')"
           required
           v-model="form.episode"
         />
@@ -72,26 +72,28 @@
           <PreviewImage @emitImage="" :image="form.image" />
         </div>
         <div class="btn-submit-form-ctn">
-          <button>Update Cartoon</button>
+          <button>{{$t('update-delete.update-cartoon')}}</button>
         </div>
       </div>
     </div>
-    <!-- <transition name="toast">
-      <ToastNotification v-if="showToast" :msgDelete="msgDelete" />
-    </transition> -->
+    <transition name="toast">
+      <ToastNotification v-if="showToast" :msg="msgUpdate" />
+    </transition>
   </form>
 </template>
 
 <script setup>
 import { useCartoonStore } from "@/shared/stores/CartoonStore";
-import PreviewImage from "./PreviewImage.vue";
+import ToastNotification from "@/components/modals/ToastNotification.vue";
+import PreviewImage from "../add-cartoon/PreviewImage.vue";
 import { allGenreList } from "@/shared/utils/all-genre-type";
 import { ref, onMounted, watchEffect, computed, watch, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import router from "@/router";
 
 const creator = ref("");
-const showToast = ref(true);
+const showToast = ref(false);
+const msgUpdate = ref(false)
 
 const props = defineProps({
   id: String,
@@ -122,23 +124,21 @@ const form = ref({
 
 watchEffect(() => {
   (form.value.title = cartoonDetail.value.title),
-    (form.value.year = cartoonDetail.value.year),
-    (form.value.creatorList = cartoonDetail.value.creator),
-    (form.value.rating = cartoonDetail.value.rating),
-    (form.value.genreType = cartoonDetail.value.genre),
-    (form.value.runtime = cartoonDetail.value.runtime_in_minutes),
-    (form.value.episode = cartoonDetail.value.episodes),
-    (form.value.image = cartoonDetail.value.image);
+  (form.value.year = cartoonDetail.value.year),
+  (form.value.creatorList = cartoonDetail.value.creator),
+  (form.value.rating = cartoonDetail.value.rating),
+  (form.value.genreType = cartoonDetail.value.genre),
+  (form.value.runtime = cartoonDetail.value.runtime_in_minutes),
+  (form.value.episode = cartoonDetail.value.episodes),
+  (form.value.image = cartoonDetail.value.image);
 });
 
-//// set allGenereList to default value ,, isSelect to false
+//// set allGenereList to default value , isSelect to false
 onUnmounted(() => {
   const arr1 = allGenreList.value;
   const arr2 = form.value.genreType;
-  arr2?.map(
-    (name) => (arr1.find((x) => x.name == name).isSelect = false)
-  );
-})
+  arr2?.map((name) => (arr1.find((x) => x.name == name).isSelect = false));
+});
 
 //// check Genre value and set isSelect to true
 const checkValueGenre = () => {
@@ -197,21 +197,28 @@ const setIsSelect = (value) => {
 
 //// push data from form in to cartoon object
 const getInputFormData = () => {
-  const data = form.value
+  const data = form.value;
   const cartoon = {
-    "title": data.title,
-    "year": data.year,
-    "creator": data.creatorList,
-    "rating": data.rating,
-    "genre": data.genreType,
-    "runtime": data.runtime,
-    "episode": data.episode,
-    "image": data.image
-  }
+    title: data.title,
+    year: data.year,
+    creator: data.creatorList,
+    rating: data.rating,
+    genre: data.genreType,
+    runtime: data.runtime,
+    episode: data.episode,
+    image: data.image,
+    isFav: cartoonDetail.value.isFav
+  };
 
-  cartoonStore.updateCartoon(props.id,cartoon).then(res => {
-    if (res == 'success') {
-      router.go(-1)
+  cartoonStore.updateCartoon(props.id, cartoon).then((res) => {
+    if (res == "success") {
+      msgUpdate.value = true
+      showToast.value = true;
+      setTimeout(() => (showToast.value = false), 2500);
+      setTimeout(() => router.go(-1), 2800)
+    } else {
+      showToast.value = true;
+      setTimeout(() => (showToast.value = false), 2500);
     }
   });
 };

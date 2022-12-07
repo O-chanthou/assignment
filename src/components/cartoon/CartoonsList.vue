@@ -19,7 +19,7 @@
             <span class="dot"></span>
             <span class="ctn-duration">{{ cartoon.runtime_in_minutes }}m</span>
           </div>
-          <span class="ctn-type">{{ cartoon.genre[0] }}</span>
+          <span class="ctn-type">{{$t(`genre.${cartoon.genre[0]}`)}}</span>
         </div>
       </div>
     </router-link>
@@ -27,6 +27,7 @@
 </template>
 
 <script setup>
+import { defineProps } from 'vue';
 defineProps({
   cartoon: Object
 })
@@ -39,7 +40,7 @@ defineProps({
   width: 100%;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .ctn-item {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

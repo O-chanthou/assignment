@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { Cartoon } from "/Vue/assignment-vue/git-project/data/Cartoon.interface";
+import type { Cartoon } from "../utils/Cartoon.interface"
 
 const cartoons: Cartoon[] = [];
 
@@ -12,7 +12,13 @@ export const useCartoonStore = defineStore("useCartoonStore", {
     isDelete: false
   }),
 
-  getters: {},
+  getters: {
+    getFavorite(): Cartoon[] {
+      console.log('start get fav');
+      // return 'sdaflkasjfklhskdf'
+      return this.cartoons.filter((c) => c.isFav)
+    }
+  },
   
   actions: {
     async fetchCartoons(id?: number | string) {
@@ -50,6 +56,7 @@ export const useCartoonStore = defineStore("useCartoonStore", {
           episodes: cartoon.episodes,
           image: cartoon.image,
           id: cartoon.id,
+          isFav: cartoon.isFav
         }),
       };
 
@@ -57,9 +64,14 @@ export const useCartoonStore = defineStore("useCartoonStore", {
         "http://localhost:3000/cartoons",
         requestOptions
       );
-      console.log(response);
-      const data = await response.json();
-      console.log(data);
+
+      if (response.ok) {
+        const data = await response.json();
+        this.cartoons = data
+       return 'success'
+      } else {
+       return 'fail'
+      }
     },
 
     async deleteCartoon(id: number | string) {
@@ -96,7 +108,31 @@ export const useCartoonStore = defineStore("useCartoonStore", {
           runtime_in_minutes: cartoon.runtime,
           episodes: cartoon.episode,
           image: cartoon.image,
+          isFav: cartoon.isFav
         }),
+      };
+    
+      const response = await fetch(
+        "http://localhost:3000/cartoons/"+id,
+        requestOptions
+      );
+      if (response.ok) {
+        const data = await response.json();
+        this.cartoonDetail = data
+       return this.updateMsg = 'success'
+      } else {
+       return this.updateMsg = 'fail'
+      }
+      
+    },
+
+    async toggleFavorite(id: number | string, isFav: boolean) {
+      console.log('start favorite cartoon ......');
+  
+      const requestOptions = {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isFav: isFav = !isFav }),
       };
     
       const response = await fetch(

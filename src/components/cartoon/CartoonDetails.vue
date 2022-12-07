@@ -11,11 +11,11 @@
       <div class="btn-watch-fav">
         <a class="watch">
           <i class="material-icons size-white color"> play_circle_filled</i>
-          Watch now</a
+          {{$t('detail.watch-now')}}</a
         >
-        <a class="fav">
-          <i class="material-icons size color-black">favorite</i> Add to
-          favorite</a
+        <a class="fav" @click="addFavorite(id, cartoonDetail.isFav)">
+          <i class="material-icons size color-black"  :class="{active: cartoonDetail.isFav}" >favorite</i>
+          {{$t('detail.add-to-fav')}}</a
         >
       </div>
 
@@ -29,10 +29,10 @@
           :href="'https://www.youtube.com/results?search_query='+cartoonDetail.title"
           target="_blank"
         >
-          <i class="material-icons"> videocam </i> Trailer
+          <i class="material-icons"> videocam </i> {{$t('detail.trailer')}}
         </a>
         <a class="quality">HD</a>
-        <a class="rating">Rating: {{ cartoonDetail.rating }}</a>
+        <a class="rating">{{$t('detail.rating')}}: {{ cartoonDetail.rating }}</a>
       </div>
 
       <div class="description">
@@ -42,23 +42,24 @@
           nisi eaque voluptatibus mollitia illum magni iusto!
         </p>
       </div>
+
       <div class="parent">
         <div class="info-left">
           <div class="episode">
-            <b>Episode:</b> {{ cartoonDetail.episodes }}
+            <b>{{$t('detail.ep')}}:</b> {{ cartoonDetail.episodes }}
           </div>
-          <div class="release"><b>Release:</b> {{ cartoonDetail.year }}</div>
+          <div class="release"><b>{{$t('detail.release')}}:</b> {{ cartoonDetail.year }}</div>
           <div class="genre">
-            <b>Genre: </b>
-            <span v-for="genre in cartoonDetail.genre"> {{ genre }}, </span>
+            <b>{{$t('detail.genre')}}: </b>
+            <span v-for="genre in cartoonDetail.genre"> {{ $t(`genre.${genre}`) }}, </span>
           </div>
         </div>
         <div class="info-right">
           <div class="duration">
-            <b>Duration: </b> {{ cartoonDetail.runtime_in_minutes }} min
+            <b>{{$t('detail.duration')}}: </b> {{ cartoonDetail.runtime_in_minutes }} min
           </div>
           <div class="creator">
-            <b>Creator : </b>
+            <b>{{$t('detail.creator')}} : </b>
             <span v-for="creator in cartoonDetail.creator"
               >  {{ creator }}
             </span>
@@ -67,10 +68,14 @@
         <div class="spacer"></div>
       </div>
     </div>
+    <transition name="toast">
+      <ToastNotification v-if="showToast" :msg="msgFav" />
+    </transition>
   </div>
 </template>
 
 <script setup>
+import ToastNotification from "../modals/ToastNotification.vue";
 import { useCartoonStore } from "@/shared/stores/CartoonStore";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
@@ -79,15 +84,35 @@ const props = defineProps({
   id: String,
 });
 
+const showToast = ref(false)
+const msgFav = ref(false)
+
 const cartoonStore = useCartoonStore();
 
 cartoonStore.fetchCartoons(props.id);
 
 const { cartoonDetail } = storeToRefs(cartoonStore);
 
+const addFavorite = (id, isFav) => {
+cartoonStore.toggleFavorite(id, isFav).then((res) => {
+  if (res == "success") {
+      msgFav.value = true
+      showToast.value = true;
+      setTimeout(() => (showToast.value = false), 2500);
+    } else {
+      showToast.value = true;
+      setTimeout(() => (showToast.value = false), 2500);
+    }
+})
+}
+
 </script>
 
 <style scoped>
+.fav i.active{
+  color: red;
+  font-size: larger;
+}
 .parent {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -95,7 +120,6 @@ const { cartoonDetail } = storeToRefs(cartoonStore);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
 }
-
 .div1 {
   grid-area: 1 / 1 / 2 / 2;
 }
@@ -122,7 +146,7 @@ const { cartoonDetail } = storeToRefs(cartoonStore);
 }
 .ctn-detail-container .ctn-image {
   /* background: rgb(107, 99, 99); */
-  /* width: 25%; */
+  width: 320px;
   margin-left: 25px;
   margin-top: 25px;
   margin-bottom: 25px;
@@ -210,8 +234,8 @@ a.fav {
   font-size: 1em;
   color: #111111;
 }
-
 .genre p {
   margin: 0;
 }
+
 </style>
