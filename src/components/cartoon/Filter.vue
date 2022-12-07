@@ -1,37 +1,37 @@
 <template>
   <div>
-    <button
+    <!-- <button
       class="btn-filter"
       @click="sortYear(isSort)"
       :title="$t('create.year')"
       :class="{ active: isSort }"
     >
       {{ $t("home.filter") }}
-    </button>
+    </button> -->
+    <div class="grid-container">
+      <CartoonsList v-for="cartoon in cartoons" :cartoon="cartoon" />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
+import CartoonsList from "./CartoonsList.vue";
+import { useCartoonStore } from "@/shared/stores/CartoonStore";
+import { storeToRefs } from "pinia";
+import { ref, onMounted } from "vue";
 
-const props = defineProps({
-  cartoons: Array,
-});
-const isSort = ref(false);
+const isFilter = ref(false)
 
-const sortYear = (value) => {
-  if (value == false) {
-    props.cartoons.sort((a, b) => {
-      return b.year - a.year;
-    });
-    isSort.value = true;
-  } else {
-    props.cartoons.sort((a, b) => {
-      return a.year - b.year;
-    });
-    isSort.value = false;
+const cartoonStore = useCartoonStore();
+const { cartoons } = storeToRefs(cartoonStore);
+
+cartoonStore.fetchCartoons().then(res => {
+  if (res === 'loaded') {
+   cartoons.value.sort((a, b) => {
+    return b.year - a.year
+   })
   }
-};
+})
 </script>
 
 <style>

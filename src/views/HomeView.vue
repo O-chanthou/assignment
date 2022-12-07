@@ -1,28 +1,35 @@
 <template>
   <div class="home">
     <div class="btn-container">
-      <AllCartoon />
-      <CartoonFavsList />
-      <Filter :cartoons="cartoons" />
+      <button
+        v-for="(tab, i) in tabs"
+        :key="tab.name"
+        :class="{ active: activeTab.name === tab.name }"
+        @click="activeTab = tabs[i]"
+      >{{$t(`home.${tab.name}`)}}</button>
     </div>
-    <div class="grid-container">
-      <CartoonsList v-for="cartoon in cartoons" :cartoon="cartoon" />
-    </div>
+
+    <keep-alive>
+      <component :is="activeTab.comp"></component>
+    </keep-alive>
+
+    
   </div>
 </template>
 
 <script setup>
-import { storeToRefs } from "pinia";
-import CartoonsList from "@/components/cartoon/CartoonsList.vue";
-import { useCartoonStore } from "@/shared/stores/CartoonStore";
-import Filter from "@/components/Filter.vue";
+import Filter from "@/components/cartoon/Filter.vue";
 import CartoonFavsList from "@/components/cartoon/CartoonFavsList.vue";
 import AllCartoon from "@/components/cartoon/AllCartoon.vue";
+import { shallowRef } from "vue";
 
-const cartoonStore = useCartoonStore();
-const { cartoons } = storeToRefs(cartoonStore);
-cartoonStore.fetchCartoons();
+const tabs = [
+  { name: "all-cartoon", comp: AllCartoon },
+  { name: "favorite", comp: CartoonFavsList },
+  { name: "filter", comp: Filter },
+];
+
+const activeTab = shallowRef(tabs[0]);
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -15,9 +15,13 @@ export const useCartoonStore = defineStore("useCartoonStore", {
   getters: {
     getFavorite(): Cartoon[] {
       console.log('start get fav');
-      // return 'sdaflkasjfklhskdf'
       return this.cartoons.filter((c) => c.isFav)
-    }
+    },
+
+    // filterCartoon(isFilter): Cartoon[] {
+    //   return this.cartoons.sort((a, b) => b.year - a.year
+    //   )
+    // }
   },
   
   actions: {

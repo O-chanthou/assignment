@@ -8,6 +8,7 @@
         "language": "Language"
     },
     "home":{
+        "all-cartoon": "All Cartoon",
         "filter": "Filter by year",
         "favorite": "Favorite"
     },

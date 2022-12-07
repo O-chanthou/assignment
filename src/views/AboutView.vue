@@ -5,7 +5,7 @@
       v-for="(tab, i) in tabs"
       :key="tab.name"
       :class="{ active: currentTab.name === tab.name }"
-      @click="currentTab = tabs[i] "
+      @click="currentTab = tabs[i]"
     >
       {{ tab.name }}
     </button>
@@ -13,7 +13,7 @@
    <keep-alive>
     <component :is="currentTab.comp" />
    </keep-alive>
-   
+
   </div>
 </template>
 
@@ -28,8 +28,6 @@ const tabs = [
   { name: "TabB", comp: TabB },
   { name: "TabC", comp: TabC },
 ];
-
-// const activeTab = shallowRef(tabs[0])
 const currentTab = shallowRef(tabs[0]);
 </script>
 
