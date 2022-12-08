@@ -1,0 +1,80 @@
+{
+    "nav": {
+        "home": "ទំព័រដើម",
+        "manage-cartoon": "គ្រប់គ្រង់តុក្កតា",
+        "about": "អំពី",
+        "en": "English",
+        "km": "ខ្មែរ",
+        "language": "ភាសា"
+    },
+    "home":{
+        "all-cartoon": "តុក្កតាទាំងអស់",
+        "filter-by-title": "តម្រៀបតាមឈ្មោះ",
+        "filter-by-year": "តម្រៀបតាមឆ្នាំ",
+        "favorite": "ចូលចិត្ត"
+    },
+    "detail": {
+        "watch-now": "មើលឥឡូវនេះ",
+        "add-to-fav": "ពេញចិត្ត",
+        "trailer": "ឈុតខ្លី",
+        "rating": "វាយតម្លៃ",
+        "ep": "វគ្គ",
+        "release": "ចេញផ្សាយ",
+        "genre": "ប្រភេទ",
+        "duration": "រយៈពេល",
+        "min": "នាទី",
+        "creator": "អ្នកផលិត"
+    },
+    "genre": {
+        "Action": "វាយប្រហារ",
+        "Adventure": "ដំណើរផ្សងព្រេង",
+        "Biography": "ជីវប្រវត្តិ",
+        "Comedy": "កំប្លែង",
+        "Crime": "ឧក្រិដ្ឋកម្ម",
+        "Documentary": "ភាពយន្តឯកសារ",
+        "Fantasy": "ស្រមើស្រមៃ",
+        "History": "ប្រវត្តិសាស្ត្រ",
+        "Horror": "ភ័យរន្ធត់",
+        "Music": "តន្ត្រី",
+        "Romance": "មនោសញ្ចេតនា",
+        "Sci-Fi & Fantasy": "វិទ្យាសាស្ត្រ​ & ស្រមើស្រមៃ",
+        "Science Fiction": "វិទ្យាសាស្រ្តប្រឌិត",
+        "Thriller": "រន្ធត់",
+        "War": "សង្គ្រាម",
+        "Drama": "ល្ខោន",
+        "Family": "គ្រួសារ",
+        "Short": "ខ្លី"
+    },
+    "manage": {
+        "add-cartoon": "បន្ថែមតុក្កតា",
+        "update-delete": "កែ/លុប តុក្កតា"
+    }, 
+    "create": {
+        "title": "ចំណងជើង",
+        "year": "ឆ្នាំ",
+        "creator": "អ្នកផលិត",
+        "add-click": "ចុច​ ",
+        "and-remove-click-value": "ហើយចុចលើទិន្នន័យ ដើម្បីលុប",
+        "rating": "ការវាយតម្លៃ",
+        "genre": "ប្រភេទ",
+        "runtime": "រយៈពេល",
+        "runtime-min": "រយៈពេលជានាទី",
+        "ep": "វគ្គ",
+        "no-file-chosen": "គ្មានឯកសារត្រូវបានជ្រើសរើសទេ។",
+        "add-cartoon": "បន្ថែមតុក្កតា"
+    },
+    "update-delete": {
+        "all-cartoon": "តុក្កតាទាំងអស់: ",
+        "ep": "វគ្គ",
+        "mins": "នាទី",
+        "remove-cartoon": "លុបតុក្កតា",
+        "do-u-want-to-remove": "តើអ្នកពិតជាចង់លុប ",
+        "no": "ទេ",
+        "yes": "លុប",
+        "update-cartoon": "កែប្រែទិន្នន័យ"
+    },
+    "tost": {
+        "success": "ជោគជ័យ",
+        "when-wrong": "មានបញ្ហាអ្វីមួយ..."
+    }
+}

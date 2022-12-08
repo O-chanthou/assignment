@@ -1,10 +1,10 @@
 <template>
   <div class="ctn-item">
-    <router-link :to="{name: 'details', params: {title: cartoon.title} }">
+    <router-link :to="{name: 'details', params: {id: cartoon.id, title: cartoon.title}}">
       <div class="ctn-poster">
         <img
           :src="cartoon.image"
-          onerror="src='src/assets/cartoon.png'; title='image not found'"
+          onerror="src='/src/assets/cartoon.png'; title='image not found'"
           alt="Cartoon Poster"
           :title="cartoon.title"
         />
@@ -19,20 +19,18 @@
             <span class="dot"></span>
             <span class="ctn-duration">{{ cartoon.runtime_in_minutes }}m</span>
           </div>
-          <span class="ctn-type">{{ cartoon.genre[0] }}</span>
+          <span class="ctn-type">{{$t(`genre.${cartoon.genre[0]}`)}}</span>
         </div>
       </div>
     </router-link>
   </div>
 </template>
 
-<script lang="ts">
-import CartoonDetails from "./CartoonDetails.vue";
+<script setup>
+defineProps({
+  cartoon: Object
+})
 
-export default {
-  components: { CartoonDetails },
-  props: ["cartoon"],
-};
 </script>
 
 <style>
@@ -40,11 +38,8 @@ export default {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  position: relative;
-  /* margin-left: 10px; */
+  justify-content: center;
   margin-top: 10px;
-  margin-right: 30px;
-  margin-bottom: 10px;
 }
 .ctn-item {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
