@@ -14,7 +14,7 @@
       "episodes": 684,
       "image": "https://m.media-amazon.com/images/M/MV5BYjFkMTlkYWUtZWFhNy00M2FmLThiOTYtYTRiYjVlZWYxNmJkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SY1000_CR0,0,666,1000_AL_.jpg",
       "id": 2,
-      "isFav": true
+      "isFav": false
     },
     {
       "title": "Star vs the Forces of Evil",
@@ -31,7 +31,7 @@
       "episodes": 77,
       "image": "https://m.media-amazon.com/images/M/MV5BYjFkMTlkYWUtZWFhNy00M2FmLThiOTYtYTRiYjVlZWYxNmJkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SY1000_CR0,0,666,1000_AL_.jpg",
       "id": 3,
-      "isFav": true
+      "isFav": false
     },
     {
       "title": "Gravity Falls",
@@ -65,7 +65,7 @@
       "episodes": 77,
       "image": "https://m.media-amazon.com/images/M/MV5BYWQwMDNkM2MtODU4OS00OTY3LTgwOTItNjE2Yzc0MzRkMDllXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,675,1000_AL_.jpg",
       "id": 5,
-      "isFav": false
+      "isFav": true
     },
     {
       "title": "Steven Universe",
@@ -397,7 +397,7 @@
       "episodes": 1,
       "image": "https://firebasestorage.googleapis.com/v0/b/property-connect-304903.appspot.com/o/userImages%2F36-32%2F1657443616696photo-1503023345310-bd7c1de61c7d.jpeg?alt=media&token=7fb3aebf-5954-42b3-82d7-eb6e369e3ca1",
       "id": 987767,
-      "isFav": false
+      "isFav": true
     },
     {
       "title": "hello world",

@@ -7,9 +7,10 @@
         "km": "ខ្មែរ",
         "language": "Language"
     },
-    "home":{
+    "home": {
         "all-cartoon": "All Cartoon",
-        "filter": "Filter by year",
+        "filter-by-title": "Filter by title",
+        "filter-by-year": "Filter by year",
         "favorite": "Favorite"
     },
     "detail": {

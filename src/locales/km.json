@@ -9,7 +9,8 @@
     },
     "home":{
         "all-cartoon": "តុក្កតាទាំងអស់",
-        "filter": "តម្រៀបតាមឆ្នាំ",
+        "filter-by-title": "តម្រៀបតាមឈ្មោះ",
+        "filter-by-year": "តម្រៀបតាមឆ្នាំ",
         "favorite": "ចូលចិត្ត"
     },
     "detail": {

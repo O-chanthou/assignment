@@ -89,3 +89,19 @@ nav a.router-link-exact-active {
     transition: all 0.3s ease;
   }
 
+  /* btn all cartoon, btn favorite cartoon in home view */
+  .btn-container {
+    margin: 20px 0 0 15px;
+    text-align: left;
+    display: flex;
+  }
+  .btn-container button {
+    display: inline-block;
+    margin-left: 10px;
+    background: #fff;
+    border: 2px solid #555;
+    border-radius: 5px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 1em;
+  }
