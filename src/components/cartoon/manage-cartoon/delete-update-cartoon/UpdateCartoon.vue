@@ -1,7 +1,11 @@
 <template>
-  <div v-if="isLoading == true"><h1>loading ....</h1></div>
-  <form @submit.prevent="getInputFormData" v-else>
+  <form @submit.prevent="getInputFormData">
     <div class="add-ctn-container">
+
+      <transition name="preloader">
+        <Preloader v-if="isLoading" />
+      </transition>
+
       <div class="form-input">
         <label>{{$t('create.title')}}:</label>
         <input type="text" :placeholder="$t('create.title')" required v-model="form.title" />
@@ -22,6 +26,7 @@
           v-model="creator"
           @keyup.alt="addCreator"
         />
+
         <div class="tip">
           <p>{{$t('create.add-click')}} <b>Alt</b> + <b>,</b> {{$t('create.and-remove-click-value')}}</p>
         </div>
@@ -76,24 +81,28 @@
         </div>
       </div>
     </div>
+
     <transition name="toast">
-      <ToastNotification v-if="showToast" :msg="msgUpdate" />
+      <ToastNotification v-if="showToast" :msg="isUpdate" />
     </transition>
   </form>
 </template>
 
 <script setup>
-import { useCartoonStore } from "@/shared/stores/CartoonStore";
-import ToastNotification from "@/components/modals/ToastNotification.vue";
-import PreviewImage from "../add-cartoon/PreviewImage.vue";
+
 import { allGenreList } from "@/shared/utils/all-genre-type";
 import { ref, onMounted, watchEffect, computed, watch, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import router from "@/router";
+import { useCartoonStore } from "@/shared/stores/CartoonStore";
+
+const Preloader = defineAsyncComponent(() => import("@/components/modals/Preloader.vue"))
+const ToastNotification = defineAsyncComponent(() => import("@/components/modals/ToastNotification.vue"))
+const PreviewImage = defineAsyncComponent(() => import("../add-cartoon/PreviewImage.vue"))
 
 const creator = ref("");
 const showToast = ref(false);
-const msgUpdate = ref(false)
+const isUpdate = ref(false)
 
 const props = defineProps({
   id: String,
@@ -102,13 +111,13 @@ const props = defineProps({
 //// start store
 const cartoonStore = useCartoonStore();
 
-cartoonStore.fetchCartoons(props.id).then((res) => {
+cartoonStore.fetchCartoonsFB(props.id).then((res) => {
   if (res == "loaded") {
     checkValueGenre();
   }
 });
 
-const { cartoonDetail, isLoading } = storeToRefs(cartoonStore);
+const { cartoonDetail, isLoading, updateMsg } = storeToRefs(cartoonStore);
 //// end store
 
 const form = ref({
@@ -197,7 +206,9 @@ const setIsSelect = (value) => {
 
 //// push data from form in to cartoon object
 const getInputFormData = () => {
+  isLoading.value = true
   const data = form.value;
+
   const cartoon = {
     title: data.title,
     year: data.year,
@@ -210,15 +221,19 @@ const getInputFormData = () => {
     isFav: cartoonDetail.value.isFav
   };
 
-  cartoonStore.updateCartoon(props.id, cartoon).then((res) => {
-    if (res == "success") {
-      msgUpdate.value = true
+  cartoonStore.updateCartoonFB(props.id, cartoon).then((res) => {
+    console.log('updateMsg:  '+updateMsg.value );
+  
+    if (updateMsg.value === "success") {
+      isUpdate.value = true
       showToast.value = true;
-      setTimeout(() => (showToast.value = false), 2500);
-      setTimeout(() => router.go(-1), 2800)
+      isLoading.value = false
+      setTimeout(() => (showToast.value = false), 550);
+      setTimeout(() => router.go(-1), 600)
     } else {
+      isLoading.value = false
       showToast.value = true;
-      setTimeout(() => (showToast.value = false), 2500);
+      setTimeout(() => (showToast.value = false), 550);
     }
   });
 };

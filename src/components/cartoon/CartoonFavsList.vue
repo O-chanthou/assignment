@@ -8,9 +8,10 @@
 </template>
 
 <script setup>
-import CartoonsList from "./CartoonsList.vue";
 import { useCartoonStore } from '@/shared/stores/CartoonStore';
-import { ref, onMounted } from 'vue';
+import { ref, defineAsyncComponent } from 'vue';
+const CartoonsList = defineAsyncComponent(() => import( "./CartoonsList.vue"));
+
 
 const cartoons = ref([])
 

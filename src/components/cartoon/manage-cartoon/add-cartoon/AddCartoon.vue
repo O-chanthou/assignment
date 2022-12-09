@@ -1,5 +1,8 @@
 <template>
   <form ref="form-create-ctn" @submit.prevent="getInputFormData">
+    <transition name="preloader">
+      <Preloader v-if="isLoading" />
+    </transition>
     <div class="add-ctn-container">
       <div class="form-input">
         <label>{{$t('create.title')}}:</label>
@@ -77,11 +80,15 @@
 </template>
 
 <script setup>
-import ToastNotification from "@/components/modals/ToastNotification.vue";
-import { useCartoonStore } from "@/shared/stores/CartoonStore";
-import PreviewImage from "./PreviewImage.vue";
 import { allGenreList } from "@/shared/utils/all-genre-type";
-import { ref, onUnmounted } from "vue";
+import { ref, onUnmounted, defineAsyncComponent } from "vue";
+import { storeToRefs } from "pinia";
+import { useCartoonStore } from "@/shared/stores/CartoonStore";
+import { createCartoonFB } from "@/shared/services/Firebase/add-cartoon";
+const Preloader = defineAsyncComponent(() => import("@/components/modals/Preloader.vue"))
+const ToastNotification = defineAsyncComponent(() => import("@/components/modals/ToastNotification.vue"))
+const PreviewImage = defineAsyncComponent(() => import("./PreviewImage.vue"))
+
 
 const title = ref("");
 const year = ref(null);
@@ -94,6 +101,7 @@ const episode = ref(null);
 const image = ref("");
 const showToast = ref(false);
 const msgCreate = ref(false);
+const isLoading = ref(false)
 
 //// set allGenereList to default value , isSelect to false
 onUnmounted(() => {
@@ -102,7 +110,9 @@ onUnmounted(() => {
   arr2?.map((name) => (arr1.find((x) => x.name == name).isSelect = false));
 });
 
-const cartoonStore = useCartoonStore();
+// const cartoonStore = useCartoonStore();
+
+// const { cartoons, isLoading } = storeToRefs(cartoonStore);
 
 //// add creator to creatorList
 const addCreator = (e) => {
@@ -151,6 +161,8 @@ const setIsSelect = (value) => {
 
 //// push data from form in to cartoon object
 const getInputFormData = () => {
+  isLoading.value = true
+  
   const cartoonModel = {
     title: title.value,
     year: year.value,
@@ -164,15 +176,31 @@ const getInputFormData = () => {
     isFav: false
   };
 
-  cartoonStore.createCartoon(cartoonModel).then((res) => {
+  ////// create cartoon and store to json server
+  // cartoonStore.createCartoon(cartoonModel).then((res) => {
+  //   if (res == "success") {
+  //     msgCreate.value = true;
+  //     showToast.value = true;
+  //     setTimeout(() => (showToast.value = false), 2500);
+  //     resetForm();
+  //     console.log(genreType);
+  //   } else {
+  //     showToast.value = true;
+  //     setTimeout(() => (showToast.value = false), 2500);
+  //   }
+  // });
+
+  ////// create cartoon and store to firebase server
+  createCartoonFB(cartoonModel).then((res) => {
     if (res == "success") {
       msgCreate.value = true;
       showToast.value = true;
+      isLoading.value = false
       setTimeout(() => (showToast.value = false), 2500);
       resetForm();
-      console.log(genreType);
     } else {
       showToast.value = true;
+      isLoading.value = false
       setTimeout(() => (showToast.value = false), 2500);
     }
   });

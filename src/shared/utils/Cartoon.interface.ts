@@ -1,13 +1,13 @@
 
 export interface Cartoon {
-    id: number,
+    id: number | string,
     title: string,
-    year: number,
+    year: number | string,
     creator: [],
     rating: number | string,
     genre: [],
-    runtime_in_minutes: number,
-    episodes: number,
+    runtime_in_minutes: number | string,
+    episodes: number | string,
     image: string,  
     isFav: boolean
 }

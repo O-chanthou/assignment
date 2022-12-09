@@ -19,9 +19,9 @@
 </template>
 
 <script setup>
-import CartoonFavsList from "@/components/cartoon/CartoonFavsList.vue";
-import AllCartoon from "@/components/cartoon/AllCartoon.vue";
-import { shallowRef } from "vue";
+import { shallowRef, defineAsyncComponent } from "vue";
+const AllCartoon = defineAsyncComponent(() => import("@/components/cartoon/AllCartoon.vue"))
+const CartoonFavsList = defineAsyncComponent(() => import("@/components/cartoon/CartoonFavsList.vue"))
 
 const tabs = [
   { name: "all-cartoon", comp: AllCartoon },

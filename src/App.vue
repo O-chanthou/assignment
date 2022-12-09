@@ -25,7 +25,8 @@
 </template>
 
 <script setup>
-import SwitchLanguage from "./components/SwitchLanguage.vue";
+import { defineAsyncComponent } from "vue";
+const SwitchLanguage = defineAsyncComponent(() => import("./components/SwitchLanguage.vue"))
 </script>
 
 <style scoped>

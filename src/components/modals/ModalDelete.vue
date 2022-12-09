@@ -32,6 +32,7 @@
 
 <script setup>
 import { useCartoonStore } from "@/shared/stores/CartoonStore";
+import { storeToRefs } from "pinia";
 
 const props = defineProps({
   modalActive: Boolean,
@@ -46,11 +47,14 @@ const emit = defineEmits(["close", "emitDelete"]);
 
 const cartoonStore = useCartoonStore();
 
+const {isDelete} = storeToRefs(cartoonStore)
+
 const btnDeleteCartoon = (id) => {
-  cartoonStore.deleteCartoon(id).then((res) => {
-    if (res == true) {
+  cartoonStore.deleteCartoonFB(id).then((res) => {
+    console.log('isDelete:: '+isDelete.value);
+    if (isDelete.value == true) {
         btnCloseModal()
-        emit("emitDelete", res)
+        emit("emitDelete", isDelete.value)
     } else {
         btnCloseModal()
     }
