@@ -1,0 +1,1 @@
+import{_ as o,o as a,c as _,x as c,y as t,a as s}from"./index.360080b6.js";const d={},r=e=>(c("data-v-f12a55fb"),e=e(),t(),e),p={class:"preload"},n=r(()=>s("div",{class:"lds-ripple"},[s("div"),s("div")],-1)),i=[n];function l(e,f){return a(),_("div",p,i)}const h=o(d,[["render",l],["__scopeId","data-v-f12a55fb"]]);export{h as default};
