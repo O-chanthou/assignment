@@ -14,7 +14,7 @@
       "episodes": 684,
       "image": "https://m.media-amazon.com/images/M/MV5BYjFkMTlkYWUtZWFhNy00M2FmLThiOTYtYTRiYjVlZWYxNmJkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SY1000_CR0,0,666,1000_AL_.jpg",
       "id": 2,
-      "isFav": false
+      "isFav": true
     },
     {
       "title": "Star vs the Forces of Evil",
@@ -48,7 +48,7 @@
       "episodes": 40,
       "image": "https://m.media-amazon.com/images/M/MV5BMTEzNDc3MDQ2NzNeQTJeQWpwZ15BbWU4MDYzMzUwMDIx._V1_SY1000_CR0,0,641,1000_AL_.jpg",
       "id": 4,
-      "isFav": true
+      "isFav": false
     },
     {
       "title": "Bojack Horseman",
@@ -82,7 +82,7 @@
       "episodes": 175,
       "image": "https://m.media-amazon.com/images/M/MV5BNTNjMTM1YWYtZWQ3Yy00OGI1LWEyZjUtYTk3OTk5NGIxMzIyXkEyXkFqcGdeQXVyMzM4NjcxOTc@._V1_SY1000_CR0,0,651,1000_AL_.jpg",
       "id": 6,
-      "isFav": false
+      "isFav": true
     },
     {
       "title": "Adventure Time",
@@ -400,24 +400,6 @@
       "isFav": true
     },
     {
-      "title": "hello world",
-      "year": 2019,
-      "creator": [
-        "Tomohiko Itō"
-      ],
-      "rating": "8",
-      "genre": [
-        "Adventure",
-        "Romance",
-        "Documentary"
-      ],
-      "runtime_in_minutes": 98,
-      "episodes": 1,
-      "image": "",
-      "id": 1742301,
-      "isFav": false
-    },
-    {
       "title": "test001",
       "year": 2023,
       "creator": [
@@ -431,55 +413,6 @@
       "episodes": 1,
       "image": "",
       "id": 8491219,
-      "isFav": false
-    },
-    {
-      "title": "test00000",
-      "year": 202020,
-      "creator": [
-        "thsaf"
-      ],
-      "rating": "11",
-      "genre": [
-        "Action",
-        "Adventure"
-      ],
-      "runtime_in_minutes": 1111,
-      "episodes": 11,
-      "image": "",
-      "id": 2198562,
-      "isFav": false
-    },
-    {
-      "title": "test00011111",
-      "year": 2020,
-      "creator": [
-        "hdksahfdk"
-      ],
-      "rating": "9",
-      "genre": [
-        "Action"
-      ],
-      "runtime_in_minutes": 1222,
-      "episodes": 1,
-      "image": "",
-      "id": 1305340,
-      "isFav": false
-    },
-    {
-      "title": "testtttt",
-      "year": 2020,
-      "creator": [
-        "sfjsjgkldfj"
-      ],
-      "rating": "9",
-      "genre": [
-        "Action"
-      ],
-      "runtime_in_minutes": 122,
-      "episodes": 9,
-      "image": "",
-      "id": 3160859,
       "isFav": false
     }
   ]

@@ -1,4 +1,7 @@
 <template>
+   <transition name="preloader">
+    <Preloader v-if="isLoading" />
+  </transition>
   <div class="btn-filter">
     <button
       v-for="(btn, i) in btnFilter"
@@ -14,6 +17,7 @@
       {{ $t(`home.${btn.name}`) }}
     </button>
   </div>
+
   <div class="all-cartoon">
     <div class="grid-container">
       <CartoonsList v-for="cartoon in cartoons" :cartoon="cartoon" />
@@ -23,10 +27,11 @@
 </template>
 
 <script setup>
-import CartoonsList from "./CartoonsList.vue";
 import { useCartoonStore } from "@/shared/stores/CartoonStore";
 import { storeToRefs } from "pinia";
-import { ref, shallowRef } from "vue";
+import { ref, shallowRef, defineAsyncComponent } from "vue";
+const CartoonsList = defineAsyncComponent(() => import("./CartoonsList.vue"))
+const Preloader = defineAsyncComponent(() => import("../modals/Preloader.vue"))
 
 const isTitle = ref(false);
 const isYear = ref(false);
@@ -35,11 +40,19 @@ const originYearCartoons = [];
 
 const cartoonStore = useCartoonStore();
 
-const { cartoons } = storeToRefs(cartoonStore);
+const { cartoons, isLoading } = storeToRefs(cartoonStore);
 
-cartoonStore.fetchCartoons().then((res) => {
+// cartoonStore.fetchCartoons().then((res) => {
+//   if (res === "loaded") {
+//     cartoons.value.forEach((e) => {
+//       originTitleCartoons.push(e);
+//       originYearCartoons.push(e);
+//     });
+//   }
+// });
+
+cartoonStore.fetchCartoonsFB().then((res) => {
   if (res === "loaded") {
-    console.log("start fetch data ......");
     cartoons.value.forEach((e) => {
       originTitleCartoons.push(e);
       originYearCartoons.push(e);

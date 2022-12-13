@@ -1,5 +1,8 @@
 <template>
   <div class="cartoons-container">
+    <transition name="preloader">
+      <Preloader v-if="isLoading" />
+    </transition>
     <div class="txt-cartoon">
       <h2>{{$t('update-delete.all-cartoon')}} {{ cartoons.length }}</h2>
     </div>
@@ -44,6 +47,7 @@
         </div>
       </div>
     </div>
+    
     <ModalDelete
       @close="toggleModal"
       :modalActive="modalActive"
@@ -57,6 +61,7 @@
         </p>
       </div>
     </ModalDelete>
+
     <transition name="toast">
       <ToastNotification v-if="showToast" :msg="msgDelete" />
     </transition>
@@ -64,11 +69,13 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, defineAsyncComponent } from "vue";
 import { useCartoonStore } from "@/shared/stores/CartoonStore";
 import { storeToRefs } from "pinia";
-import ModalDelete from "@/components/modals/ModalDelete.vue";
-import ToastNotification from "@/components/modals/ToastNotification.vue";
+
+const Preloader = defineAsyncComponent(()=> import("@/components/modals/Preloader.vue"))
+const ModalDelete = defineAsyncComponent(()=> import("@/components/modals/ModalDelete.vue"))
+const ToastNotification = defineAsyncComponent(()=> import("@/components/modals/ToastNotification.vue"))
 
 const modalActive = ref(false);
 const ctnTitle = ref("");
@@ -77,8 +84,10 @@ const showToast = ref(false);
 const msgDelete = ref(Boolean);
 
 const cartoonStore = useCartoonStore();
-cartoonStore.fetchCartoons();
-const { cartoons } = storeToRefs(cartoonStore);
+
+cartoonStore.fetchCartoonsFB();
+
+const { cartoons, isLoading } = storeToRefs(cartoonStore);
 
 const toggleModal = (title, id) => {
   modalActive.value = !modalActive.value;
@@ -89,7 +98,7 @@ const toggleModal = (title, id) => {
 const getEmitDelete = (value) => {
   msgDelete.value = value;
   showToast.value = true;
-  setTimeout(() => (showToast.value = false), 3000);
+  setTimeout(() => (showToast.value = false), 600);
 };
 </script>
 

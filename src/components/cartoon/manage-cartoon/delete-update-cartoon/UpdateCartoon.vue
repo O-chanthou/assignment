@@ -1,12 +1,20 @@
 <template>
-  <div v-if="isLoading == true"><h1>loading ....</h1></div>
-  <form @submit.prevent="getInputFormData" v-else>
+  <form @submit.prevent="getInputFormData">
     <div class="add-ctn-container">
-      <div class="form-input">
-        <label>{{$t('create.title')}}:</label>
-        <input type="text" :placeholder="$t('create.title')" required v-model="form.title" />
+      <transition name="preloader">
+        <Preloader v-if="isLoading" />
+      </transition>
 
-        <label>{{$t('create.year')}}:</label>
+      <div class="form-input">
+        <label>{{ $t("create.title") }}:</label>
+        <input
+          type="text"
+          :placeholder="$t('create.title')"
+          required
+          v-model="form.title"
+        />
+
+        <label>{{ $t("create.year") }}:</label>
         <input
           type="number"
           min="0"
@@ -15,15 +23,19 @@
           v-model="form.year"
         />
 
-        <label>{{$t('create.creator')}}:</label>
+        <label>{{ $t("create.creator") }}:</label>
         <input
           type="text"
           :placeholder="$t('create.creator')"
           v-model="creator"
           @keyup.alt="addCreator"
         />
+
         <div class="tip">
-          <p>{{$t('create.add-click')}} <b>Alt</b> + <b>,</b> {{$t('create.and-remove-click-value')}}</p>
+          <p>
+            {{ $t("create.add-click") }} <b>Alt</b> + <b>,</b>
+            {{ $t("create.and-remove-click-value") }}
+          </p>
         </div>
         <div
           v-for="creator in form.creatorList"
@@ -35,10 +47,14 @@
         </div>
         <br />
 
-        <label>{{$t('create.rating')}}:</label>
-        <input type="text" :placeholder="$t('create.rating')" v-model="form.rating" />
+        <label>{{ $t("create.rating") }}:</label>
+        <input
+          type="text"
+          :placeholder="$t('create.rating')"
+          v-model="form.rating"
+        />
 
-        <label>{{$t('create.genre')}}:</label>
+        <label>{{ $t("create.genre") }}:</label>
         <div
           class="genre"
           v-for="genre in allGenreList"
@@ -50,7 +66,7 @@
         </div>
         <br />
 
-        <label>{{$t('create.runtime')}}:</label>
+        <label>{{ $t("create.runtime") }}:</label>
         <input
           type="number"
           :placeholder="$t('create.runtime-min')"
@@ -58,7 +74,7 @@
           v-model="form.runtime"
         />
 
-        <label>{{$t('create.ep')}}:</label>
+        <label>{{ $t("create.ep") }}:</label>
         <input
           type="number"
           :placeholder="$t('create.ep')"
@@ -69,31 +85,50 @@
 
       <div class="form-img-submit">
         <div class="choose-img">
-          <PreviewImage @emitImage="" :image="form.image" />
+          <PreviewImage @emitImage="imageData" :propImage="form.image" />
         </div>
         <div class="btn-submit-form-ctn">
-          <button>{{$t('update-delete.update-cartoon')}}</button>
+          <button>{{ $t("update-delete.update-cartoon") }}</button>
         </div>
       </div>
     </div>
+
     <transition name="toast">
-      <ToastNotification v-if="showToast" :msg="msgUpdate" />
+      <ToastNotification v-if="showToast" :msg="isUpdate" />
     </transition>
   </form>
 </template>
 
 <script setup>
-import { useCartoonStore } from "@/shared/stores/CartoonStore";
-import ToastNotification from "@/components/modals/ToastNotification.vue";
-import PreviewImage from "../add-cartoon/PreviewImage.vue";
+import { uploadCartoonImage } from "@/shared/services/Firebase/upload-image";
 import { allGenreList } from "@/shared/utils/all-genre-type";
-import { ref, onMounted, watchEffect, computed, watch, onUnmounted } from "vue";
+import {
+  ref,
+  watchEffect,
+  defineAsyncComponent,
+  onUnmounted,
+  reactive,
+} from "vue";
 import { storeToRefs } from "pinia";
 import router from "@/router";
+import { useCartoonStore } from "@/shared/stores/CartoonStore";
+const Preloader = defineAsyncComponent(() =>
+  import("@/components/modals/Preloader.vue")
+);
+const ToastNotification = defineAsyncComponent(() =>
+  import("@/components/modals/ToastNotification.vue")
+);
+const PreviewImage = defineAsyncComponent(() =>
+  import("../add-cartoon/PreviewImage.vue")
+);
 
 const creator = ref("");
 const showToast = ref(false);
-const msgUpdate = ref(false)
+const isUpdate = ref(false);
+const imageObj = reactive({
+  fileName: "",
+  imageBase64: "",
+});
 
 const props = defineProps({
   id: String,
@@ -102,13 +137,13 @@ const props = defineProps({
 //// start store
 const cartoonStore = useCartoonStore();
 
-cartoonStore.fetchCartoons(props.id).then((res) => {
+cartoonStore.fetchCartoonsFB(props.id).then((res) => {
   if (res == "loaded") {
     checkValueGenre();
   }
 });
 
-const { cartoonDetail, isLoading } = storeToRefs(cartoonStore);
+const { cartoonDetail, isLoading, updateMsg } = storeToRefs(cartoonStore);
 //// end store
 
 const form = ref({
@@ -124,13 +159,13 @@ const form = ref({
 
 watchEffect(() => {
   (form.value.title = cartoonDetail.value.title),
-  (form.value.year = cartoonDetail.value.year),
-  (form.value.creatorList = cartoonDetail.value.creator),
-  (form.value.rating = cartoonDetail.value.rating),
-  (form.value.genreType = cartoonDetail.value.genre),
-  (form.value.runtime = cartoonDetail.value.runtime_in_minutes),
-  (form.value.episode = cartoonDetail.value.episodes),
-  (form.value.image = cartoonDetail.value.image);
+    (form.value.year = cartoonDetail.value.year),
+    (form.value.creatorList = cartoonDetail.value.creator),
+    (form.value.rating = cartoonDetail.value.rating),
+    (form.value.genreType = cartoonDetail.value.genre),
+    (form.value.runtime = cartoonDetail.value.runtime_in_minutes),
+    (form.value.episode = cartoonDetail.value.episodes),
+    (form.value.image = cartoonDetail.value.image);
 });
 
 //// set allGenereList to default value , isSelect to false
@@ -191,13 +226,24 @@ const setIsSelect = (value) => {
   });
 };
 
-// const uploadImageToFireBase = () => {
-//   getInputFormData
-// }
+//// get imageData from event emit file PreviewImage
+const imageData = (value) => {
+  (imageObj.fileName = value.fileName),
+    (imageObj.imageBase64 = value.imageBase64);
+  console.log(imageObj);
+};
 
 //// push data from form in to cartoon object
-const getInputFormData = () => {
+const getInputFormData = async () => {
+  isLoading.value = true;
   const data = form.value;
+
+  if (imageObj.fileName !== "" && imageObj.imageBase64 !== "") {
+    await uploadCartoonImage(imageObj).then((url) => {
+      data.image = url;
+    });
+  }
+
   const cartoon = {
     title: data.title,
     year: data.year,
@@ -207,18 +253,22 @@ const getInputFormData = () => {
     runtime: data.runtime,
     episode: data.episode,
     image: data.image,
-    isFav: cartoonDetail.value.isFav
+    isFav: cartoonDetail.value.isFav,
   };
 
-  cartoonStore.updateCartoon(props.id, cartoon).then((res) => {
-    if (res == "success") {
-      msgUpdate.value = true
+  cartoonStore.updateCartoonFB(props.id, cartoon).then((res) => {
+    console.log("updateMsg:  " + updateMsg.value);
+
+    if (updateMsg.value === "success") {
+      isUpdate.value = true;
       showToast.value = true;
-      setTimeout(() => (showToast.value = false), 2500);
-      setTimeout(() => router.go(-1), 2800)
+      isLoading.value = false;
+      setTimeout(() => (showToast.value = false), 550);
+      setTimeout(() => router.go(-1), 600);
     } else {
+      isLoading.value = false;
       showToast.value = true;
-      setTimeout(() => (showToast.value = false), 2500);
+      setTimeout(() => (showToast.value = false), 550);
     }
   });
 };

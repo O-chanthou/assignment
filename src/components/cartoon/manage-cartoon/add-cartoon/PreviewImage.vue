@@ -1,43 +1,53 @@
 <template>
   <div>
     <div class="btn-choose-img">
-      <input ref="fileInput" type="file" @input="pickFile" />
+      <input
+        id="uploadPicture"
+        ref="fileInput"
+        type="file"
+        @input="chooseFile"
+      />
     </div>
     <div
       class="imagePreviewWrapper"
-      :style="{ 'background-image': previewImage == null ? `url(${image})` : `url(${previewImage})`}"
-      @click="selectImage"
+      :style="{
+        'background-image':
+          previewImage == null ? `url(${propImage})` : `url(${previewImage})`,
+      }"
     ></div>
   </div>
 </template>
 
-<script>
-export default {
-  props: ['image'],
-  data() {
-    return {
-      previewImage: null,
-    };
-  },
+<script setup>
+import { ref, reactive } from "vue";
 
-  methods: {
-    selectImage() {
-      this.$refs.fileInput.click();
-    },
-    pickFile() {
-      let input = this.$refs.fileInput;
-      let file = input.files;
-      if (file && file[0]) {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-          this.previewImage = e.target.result;
-        };
-        reader.readAsDataURL(file[0]);
-        console.log(file[0]);
-        this.$emit('emitImage', this.file[0])
-      }
-    },
-  },
+const props = defineProps({
+  propImage: String,
+});
+
+const previewImage = ref(null);
+const reader = new FileReader();
+const imageObj = reactive({
+  fileName: "",
+  imageBase64: "",
+});
+const emit = defineEmits(["emitImage"]);
+
+const chooseFile = () => {
+  let file = document.getElementById("uploadPicture").files[0];
+
+  if (event.target.files[0]) {
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
+  reader.onload = async (event) => {
+    previewImage.value = event.target.result;
+    imageObj.imageBase64 = previewImage.value;
+    imageObj.fileName = file["name"];
+
+    /// event emit imageObj to page AddCartoon.vue
+    emit("emitImage", imageObj);
+  };
 };
 </script>
 
@@ -57,7 +67,6 @@ export default {
   width: 100%;
   height: 400px;
   display: block;
-  cursor: pointer;
   margin: 0 0 30px 0;
   background-size: cover;
   background-position: center center;

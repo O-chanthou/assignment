@@ -1,5 +1,10 @@
 <template>
   <div class="ctn-detail-container">
+
+    <transition name="preloader">
+      <Preloader v-if="isLoading" />
+    </transition>
+
     <img
       class="ctn-image"
       :src="cartoonDetail.image"
@@ -75,10 +80,12 @@
 </template>
 
 <script setup>
-import ToastNotification from "../modals/ToastNotification.vue";
 import { useCartoonStore } from "@/shared/stores/CartoonStore";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
+import { ref, defineAsyncComponent } from "vue";
+const Preloader = defineAsyncComponent(() => import("../modals/Preloader.vue"));
+const ToastNotification = defineAsyncComponent(() => import("../modals/ToastNotification.vue"));
+
 
 const props = defineProps({
   id: String,
@@ -89,19 +96,32 @@ const msgFav = ref(false)
 
 const cartoonStore = useCartoonStore();
 
-cartoonStore.fetchCartoons(props.id);
+// cartoonStore.fetchCartoonsFB(props.id);
 
-const { cartoonDetail } = storeToRefs(cartoonStore);
+cartoonStore.fetchCartoonsFB(props.id);
+
+const { cartoonDetail, isLoading, updateMsg } = storeToRefs(cartoonStore);
 
 const addFavorite = (id, isFav) => {
-cartoonStore.toggleFavorite(id, isFav).then((res) => {
-  if (res == "success") {
+// cartoonStore.toggleFavorite(id, isFav).then((res) => {
+//   if (res == "success") {
+//       msgFav.value = true
+//       showToast.value = true;
+//       setTimeout(() => (showToast.value = false), 2500);
+//     } else {
+//       showToast.value = true;
+//       setTimeout(() => (showToast.value = false), 2500);
+//     }
+// })
+cartoonStore.toggleFavoriteFB(id, isFav).then((res) => {
+  console.log('updateMsg::: '+updateMsg.value);
+  if (updateMsg.value == "success") {
       msgFav.value = true
       showToast.value = true;
-      setTimeout(() => (showToast.value = false), 2500);
+      setTimeout(() => (showToast.value = false), 550);
     } else {
       showToast.value = true;
-      setTimeout(() => (showToast.value = false), 2500);
+      setTimeout(() => (showToast.value = false), 550);
     }
 })
 }

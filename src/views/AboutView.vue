@@ -13,15 +13,15 @@
    <keep-alive>
     <component :is="currentTab.comp" />
    </keep-alive>
-
   </div>
 </template>
 
 <script setup>
-import TabA from "@/components/about/TabA.vue";
-import TabB from "@/components/about/TabB.vue";
-import TabC from "@/components/about/TabC.vue";
-import { shallowRef } from "vue";
+import { shallowRef, defineAsyncComponent } from "vue";
+const TabA = defineAsyncComponent(() => import("@/components/about/TabA.vue"))
+const TabB = defineAsyncComponent(() => import("@/components/about/TabB.vue"))
+const TabC = defineAsyncComponent(() => import("@/components/about/TabC.vue"))
+
 
 const tabs = [
   { name: "TabA", comp: TabA },
