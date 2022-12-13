@@ -5,10 +5,15 @@
     </transition>
     <div class="add-ctn-container">
       <div class="form-input">
-        <label>{{$t('create.title')}}:</label>
-        <input type="text" :placeholder="$t('create.title')" required v-model="title" />
+        <label>{{ $t("create.title") }}:</label>
+        <input
+          type="text"
+          :placeholder="$t('create.title')"
+          required
+          v-model="title"
+        />
 
-        <label>{{$t('create.year')}}:</label>
+        <label>{{ $t("create.year") }}:</label>
         <input
           type="number"
           min="0"
@@ -17,7 +22,7 @@
           v-model="year"
         />
 
-        <label>{{$t('create.creator')}}:</label>
+        <label>{{ $t("create.creator") }}:</label>
         <input
           type="text"
           :placeholder="$t('create.creator')"
@@ -25,7 +30,10 @@
           @keyup.alt="addCreator"
         />
         <div class="tip">
-          <p>{{$t('create.add-click')}} <b>Alt</b> + <b>,</b> {{$t('create.and-remove-click-value')}}</p>
+          <p>
+            {{ $t("create.add-click") }} <b>Alt</b> + <b>,</b>
+            {{ $t("create.and-remove-click-value") }}
+          </p>
         </div>
         <div
           v-for="creator in creatorList"
@@ -37,10 +45,14 @@
         </div>
         <br />
 
-        <label>{{$t('create.rating')}}:</label>
-        <input type="text" :placeholder="$t('create.rating')" v-model="rating" />
+        <label>{{ $t("create.rating") }}:</label>
+        <input
+          type="text"
+          :placeholder="$t('create.rating')"
+          v-model="rating"
+        />
 
-        <label>{{$t('create.genre')}}:</label>
+        <label>{{ $t("create.genre") }}:</label>
         <div
           class="genre"
           v-for="genre in allGenreList"
@@ -52,7 +64,7 @@
         </div>
         <br />
 
-        <label>{{$t('create.runtime')}}:</label>
+        <label>{{ $t("create.runtime") }}:</label>
         <input
           type="number"
           :placeholder="$t('create.runtime-min')"
@@ -60,16 +72,22 @@
           v-model="runtime"
         />
 
-        <label>{{$t('create.ep')}}:</label>
-        <input type="number" :placeholder="$t('create.ep')" required v-model="episode" />
+        <label>{{ $t("create.ep") }}:</label>
+        <input
+          type="number"
+          :placeholder="$t('create.ep')"
+          required
+          v-model="episode"
+        />
       </div>
 
       <div class="form-img-submit">
         <div class="choose-img">
           <PreviewImage @emitImage="imageData" />
         </div>
+
         <div class="btn-submit-form-ctn">
-          <button>{{$t('create.add-cartoon')}}</button>
+          <button>{{ $t("create.add-cartoon") }}</button>
         </div>
       </div>
     </div>
@@ -80,15 +98,17 @@
 </template>
 
 <script setup>
+import { uploadCartoonImage } from "@/shared/services/Firebase/upload-image";
 import { allGenreList } from "@/shared/utils/all-genre-type";
-import { ref, onUnmounted, defineAsyncComponent } from "vue";
-import { storeToRefs } from "pinia";
-import { useCartoonStore } from "@/shared/stores/CartoonStore";
+import { ref, onUnmounted, defineAsyncComponent, reactive } from "vue";
 import { createCartoonFB } from "@/shared/services/Firebase/add-cartoon";
-const Preloader = defineAsyncComponent(() => import("@/components/modals/Preloader.vue"))
-const ToastNotification = defineAsyncComponent(() => import("@/components/modals/ToastNotification.vue"))
-const PreviewImage = defineAsyncComponent(() => import("./PreviewImage.vue"))
-
+const Preloader = defineAsyncComponent(() =>
+  import("@/components/modals/Preloader.vue")
+);
+const ToastNotification = defineAsyncComponent(() =>
+  import("@/components/modals/ToastNotification.vue")
+);
+const PreviewImage = defineAsyncComponent(() => import("./PreviewImage.vue"));
 
 const title = ref("");
 const year = ref(null);
@@ -98,10 +118,14 @@ const rating = ref(null);
 let genreType = [];
 const runtime = ref(null);
 const episode = ref(null);
+const imageObj = reactive({
+  fileName: "",
+  imageBase64: "",
+});
 const image = ref("");
 const showToast = ref(false);
 const msgCreate = ref(false);
-const isLoading = ref(false)
+const isLoading = ref(false);
 
 //// set allGenereList to default value , isSelect to false
 onUnmounted(() => {
@@ -111,7 +135,6 @@ onUnmounted(() => {
 });
 
 // const cartoonStore = useCartoonStore();
-
 // const { cartoons, isLoading } = storeToRefs(cartoonStore);
 
 //// add creator to creatorList
@@ -155,14 +178,20 @@ const setIsSelect = (value) => {
   });
 };
 
-// const uploadImageToFireBase = () => {
-//   getInputFormData
-// }
+//// get imageData from event emit file PreviewImage
+const imageData = (value) => {
+  (imageObj.fileName = value.fileName),
+    (imageObj.imageBase64 = value.imageBase64);
+};
 
 //// push data from form in to cartoon object
-const getInputFormData = () => {
-  isLoading.value = true
-  
+const getInputFormData = async () => {
+  isLoading.value = true;
+
+  await uploadCartoonImage(imageObj).then((url) => {
+    image.value = url;
+  });
+
   const cartoonModel = {
     title: title.value,
     year: year.value,
@@ -171,9 +200,24 @@ const getInputFormData = () => {
     genre: genreType,
     runtime_in_minutes: runtime.value,
     episodes: episode.value,
-    image: "",
+    image: image.value,
     id: Math.floor(Math.random() * 10000000),
-    isFav: false
+    isFav: false,
+  };
+
+  const resetForm = async () => {
+    title.value = "";
+    year.value = null;
+    creatorList.value = [];
+    rating.value = null;
+    runtime.value = null;
+    episode.value = null;
+
+    const arr1 = allGenreList.value;
+    const arr2 = genreType;
+    arr2?.map((name) => (arr1.find((x) => x.name == name).isSelect = false));
+
+    genreType = [];
   };
 
   ////// create cartoon and store to json server
@@ -191,34 +235,19 @@ const getInputFormData = () => {
   // });
 
   ////// create cartoon and store to firebase server
-  createCartoonFB(cartoonModel).then((res) => {
+  await createCartoonFB(cartoonModel).then(async (res) => {
     if (res == "success") {
       msgCreate.value = true;
       showToast.value = true;
-      isLoading.value = false
+      isLoading.value = false;
       setTimeout(() => (showToast.value = false), 2500);
-      resetForm();
+      await resetForm();
     } else {
       showToast.value = true;
-      isLoading.value = false
+      isLoading.value = false;
       setTimeout(() => (showToast.value = false), 2500);
     }
   });
-
-  const resetForm = () => {
-    title.value = "";
-    year.value = null;
-    creatorList.value = [];
-    rating.value = null;
-    runtime.value = null;
-    episode.value = null;
-
-    const arr1 = allGenreList.value;
-    const arr2 = genreType;
-    arr2?.map((name) => (arr1.find((x) => x.name == name).isSelect = false));
-
-    genreType = [];
-  };
 };
 </script>
 
