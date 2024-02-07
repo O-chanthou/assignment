@@ -6,12 +6,7 @@
     <button
       v-for="(btn, i) in btnFilter"
       :key="btn.name"
-      @click="
-        btn.click(i),
-          activeTab == btnFilter[i]
-            ? (activeTab = !btnFilter[i])
-            : (activeTab = btnFilter[i])
-      "
+      @click="btn.click(i), activeTab == btnFilter[i] ? (activeTab = !btnFilter[i]) : (activeTab = btnFilter[i])"
       :class="{ active: activeTab.name === btn.name }"
     >
       {{ $t(`home.${btn.name}`) }}
